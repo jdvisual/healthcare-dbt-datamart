@@ -1,7 +1,8 @@
 {{ config(materialized='view') }}
 
 select
-  1 as member_id,
-  to_date('2025-01-15') as service_date,
-  'TEST' as proc_code,
-  'CLAIM1' as claim_id
+  claim_id::number      as claim_id,
+  member_id::number     as member_id,
+  service_date::date    as service_date,
+  upper(proc_code)      as proc_code
+from {{ ref('claim_lines_demo') }}
